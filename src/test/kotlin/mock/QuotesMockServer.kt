@@ -28,7 +28,7 @@ object QuotesMockServer {
 
     fun getBaseUrl(): String = "http://localhost:$PORT"
 
-    // Stub: Health Check (GET /api/Quotes/isalive)
+    //Health Check
     fun stubIsAliveSuccess() {
         stubFor(
             get(urlEqualTo("/api/Quotes/isalive"))
@@ -41,8 +41,8 @@ object QuotesMockServer {
         )
     }
 
-    // Stub: Post Create Quote (POST /api/Quotes/create - 200 OK)
-    fun stubCreateQuoteSuccess() {
+    // AC1: 1 item, no discount (Total: 100.00)
+    fun stubCreateQuoteAC1() {
         stubFor(
             post(urlEqualTo("/api/Quotes/create"))
                 .withHeader("Content-Type", containing("application/json"))
@@ -55,23 +55,23 @@ object QuotesMockServer {
                             {
                               "quote": {
                                 "id": "a3b8e210-9c12-4f81-87b3-2192138a4120",
-                                "customer": "ACME Corp",
+                                "customer": "Acme Corp",
                                 "revision": 1,
-                                "totalPrice": 1800.0,
+                                "totalPrice": 100.0,
                                 "lines": [
                                   {
-                                    "item": "Software License",
+                                    "item": "Product A",
                                     "quantity": 2.0,
-                                    "unitaryPrice": 1000.0,
-                                    "discountPercentage": 10.0,
-                                    "discountAmount": 200.0,
-                                    "linePrice": 1800.0
+                                    "unitaryPrice": 50.0,
+                                    "discountPercentage": 0.0,
+                                    "discountAmount": 0.0,
+                                    "linePrice": 100.0
                                   }
                                 ],
                                 "status": "Active"
                               },
                               "confirmation": {
-                                "message": "Quote created successfully",
+                                "message": "Quote created successfully.",
                                 "level": "Success"
                               }
                             }
@@ -81,7 +81,95 @@ object QuotesMockServer {
         )
     }
 
-    // Stub: Bad Request (400 Bad Request)
+    // AC2: 1 item with 10% discount (Discount: 10.00, Total: 90.00)
+    fun stubCreateQuoteAC2() {
+        stubFor(
+            post(urlEqualTo("/api/Quotes/create"))
+                .withHeader("Content-Type", containing("application/json"))
+                .willReturn(
+                    aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody(
+                            """
+                            {
+                              "quote": {
+                                "id": "b4c9f321-0d23-5e92-98c4-3203249b5231",
+                                "customer": "Acme Corp",
+                                "revision": 1,
+                                "totalPrice": 90.0,
+                                "lines": [
+                                  {
+                                    "item": "Product A",
+                                    "quantity": 2.0,
+                                    "unitaryPrice": 50.0,
+                                    "discountPercentage": 10.0,
+                                    "discountAmount": 10.0,
+                                    "linePrice": 90.0
+                                  }
+                                ],
+                                "status": "Active"
+                              },
+                              "confirmation": {
+                                "message": "Quote created successfully.",
+                                "level": "Success"
+                              }
+                            }
+                            """.trimIndent()
+                        )
+                )
+        )
+    }
+
+    // AC3: 2 items (Product A + Product B, Total: 200.00)
+    fun stubCreateQuoteAC3() {
+        stubFor(
+            post(urlEqualTo("/api/Quotes/create"))
+                .withHeader("Content-Type", containing("application/json"))
+                .willReturn(
+                    aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody(
+                            """
+                            {
+                              "quote": {
+                                "id": "c5da0432-1e34-6a03-09d5-4314350c6342",
+                                "customer": "Acme Corp",
+                                "revision": 1,
+                                "totalPrice": 200.0,
+                                "lines": [
+                                  {
+                                    "item": "Product A",
+                                    "quantity": 2.0,
+                                    "unitaryPrice": 50.0,
+                                    "discountPercentage": 0.0,
+                                    "discountAmount": 0.0,
+                                    "linePrice": 100.0
+                                  },
+                                  {
+                                    "item": "Product B",
+                                    "quantity": 1.0,
+                                    "unitaryPrice": 100.0,
+                                    "discountPercentage": 0.0,
+                                    "discountAmount": 0.0,
+                                    "linePrice": 100.0
+                                  }
+                                ],
+                                "status": "Active"
+                              },
+                              "confirmation": {
+                                "message": "Quote created successfully.",
+                                "level": "Success"
+                              }
+                            }
+                            """.trimIndent()
+                        )
+                )
+        )
+    }
+
+    // Negative Scenario: Bad Request
     fun stubCreateQuoteBadRequest() {
         stubFor(
             post(urlEqualTo("/api/Quotes/create"))
