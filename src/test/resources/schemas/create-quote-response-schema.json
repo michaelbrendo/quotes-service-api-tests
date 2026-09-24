@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateQuoteResponse",
+  "type": "object",
+  "required": [
+    "quote",
+    "confirmation"
+  ],
+  "properties": {
+    "quote": {
+      "type": "object",
+      "required": [
+        "id",
+        "customer",
+        "revision",
+        "totalPrice",
+        "lines",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "customer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "totalPrice": {
+          "type": "number"
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "item",
+              "quantity",
+              "unitaryPrice",
+              "discountPercentage",
+              "discountAmount",
+              "linePrice"
+            ],
+            "properties": {
+              "item": {
+                "type": "string"
+              },
+              "quantity": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "unitaryPrice": {
+                "type": "number",
+                "minimum": 0
+              },
+              "discountPercentage": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "discountAmount": {
+                "type": "number",
+                "minimum": 0
+              },
+              "linePrice": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "Active",
+            "Inactive"
+          ]
+        }
+      }
+    },
+    "confirmation": {
+      "type": "object",
+      "required": [
+        "message",
+        "level"
+      ],
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "Success",
+            "Error"
+          ]
+        }
+      }
+    }
+  }
+}
