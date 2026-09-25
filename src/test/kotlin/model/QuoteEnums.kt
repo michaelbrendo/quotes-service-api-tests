@@ -7,5 +7,5 @@ enum class QuoteStatus {
 
 enum class ConfirmationLevel {
     Success,
-    Error
+    Error,
 }

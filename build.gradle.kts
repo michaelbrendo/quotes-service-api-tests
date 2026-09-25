@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "2.2.20"
     id("io.qameta.allure") version "2.11.2"
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
 }
 group = "com.quotes"
 version = "1.0.0"

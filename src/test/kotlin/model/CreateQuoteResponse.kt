@@ -1,10 +1,10 @@
 package model
 
-import java.util.*
+import java.util.UUID
 
 data class CreateQuoteResponse(
     val quote: Quote? = null,
-    val confirmation: Confirmation
+    val confirmation: Confirmation,
 )
 
 data class Quote(
@@ -13,7 +13,7 @@ data class Quote(
     val revision: Int = 1,
     val totalPrice: Double,
     val lines: List<QuoteLine>,
-    val status: QuoteStatus
+    val status: QuoteStatus,
 )
 
 data class QuoteLine(
@@ -27,5 +27,5 @@ data class QuoteLine(
 
 data class Confirmation(
     val message: String,
-    val level: ConfirmationLevel
+    val level: ConfirmationLevel,
 )

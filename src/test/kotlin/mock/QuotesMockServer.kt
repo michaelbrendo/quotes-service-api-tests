@@ -1,11 +1,16 @@
 package mock
 
 import com.github.tomakehurst.wiremock.WireMockServer
-import com.github.tomakehurst.wiremock.client.WireMock.*
+import com.github.tomakehurst.wiremock.client.WireMock.aResponse
+import com.github.tomakehurst.wiremock.client.WireMock.configureFor
+import com.github.tomakehurst.wiremock.client.WireMock.containing
+import com.github.tomakehurst.wiremock.client.WireMock.get
+import com.github.tomakehurst.wiremock.client.WireMock.post
+import com.github.tomakehurst.wiremock.client.WireMock.stubFor
+import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 
 object QuotesMockServer {
-
     private const val PORT = 8089
     private var wireMockServer: WireMockServer? = null
 
@@ -28,7 +33,7 @@ object QuotesMockServer {
 
     fun getBaseUrl(): String = "http://localhost:$PORT"
 
-    //Health Check
+    // Health Check
     fun stubIsAliveSuccess() {
         stubFor(
             get(urlEqualTo("/api/Quotes/isalive"))
@@ -36,8 +41,8 @@ object QuotesMockServer {
                     aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
-                        .withBody("""{"status": "healthy"}""")
-                )
+                        .withBody("""{"status": "healthy"}"""),
+                ),
         )
     }
 
@@ -75,9 +80,9 @@ object QuotesMockServer {
                                 "level": "Success"
                               }
                             }
-                            """.trimIndent()
-                        )
-                )
+                            """.trimIndent(),
+                        ),
+                ),
         )
     }
 
@@ -115,9 +120,9 @@ object QuotesMockServer {
                                 "level": "Success"
                               }
                             }
-                            """.trimIndent()
-                        )
-                )
+                            """.trimIndent(),
+                        ),
+                ),
         )
     }
 
@@ -163,9 +168,9 @@ object QuotesMockServer {
                                 "level": "Success"
                               }
                             }
-                            """.trimIndent()
-                        )
-                )
+                            """.trimIndent(),
+                        ),
+                ),
         )
     }
 
@@ -184,9 +189,9 @@ object QuotesMockServer {
                               "error": "Bad Request",
                               "message": "Customer name is mandatory"
                             }
-                            """.trimIndent()
-                        )
-                )
+                            """.trimIndent(),
+                        ),
+                ),
         )
     }
 
@@ -232,9 +237,9 @@ object QuotesMockServer {
                                 "level": "Success"
                               }
                             }
-                            """.trimIndent()
-                        )
-                )
+                            """.trimIndent(),
+                        ),
+                ),
         )
     }
 
@@ -255,9 +260,9 @@ object QuotesMockServer {
                                 "level": "Error"
                               }
                             }
-                            """.trimIndent()
-                        )
-                )
+                            """.trimIndent(),
+                        ),
+                ),
         )
     }
 
@@ -278,9 +283,9 @@ object QuotesMockServer {
                                 "level": "Error"
                               }
                             }
-                            """.trimIndent()
-                        )
-                )
+                            """.trimIndent(),
+                        ),
+                ),
         )
     }
 }

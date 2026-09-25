@@ -11,7 +11,6 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 
 abstract class BaseTest {
-
     protected lateinit var quotesClient: QuotesClient
 
     companion object {
@@ -22,10 +21,11 @@ abstract class BaseTest {
         fun setupMockServer() {
             QuotesMockServer.start()
 
-            requestSpec = RequestSpecBuilder()
-                .setContentType(ContentType.JSON)
-                .addFilter(AllureRestAssured())
-                .build()
+            requestSpec =
+                RequestSpecBuilder()
+                    .setContentType(ContentType.JSON)
+                    .addFilter(AllureRestAssured())
+                    .build()
         }
 
         @JvmStatic

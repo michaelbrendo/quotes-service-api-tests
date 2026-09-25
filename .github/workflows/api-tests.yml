@@ -39,12 +39,15 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Run Ktlint Check
+        run: make lint
+
       - name: Build with Gradle
         run: ./gradlew build -x test --no-daemon
 
       - name: Run API Tests
         run: ./gradlew test --no-daemon
-        continue-on-error: true
+        continue-on-error: true # TODO: Change to false, (quality gate)
 
       - name: Checkout gh-pages branch
         uses: actions/checkout@v4.2.2

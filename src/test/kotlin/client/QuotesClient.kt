@@ -7,9 +7,8 @@ import model.CreateQuoteRequest
 
 class QuotesClient(
     private val baseUrl: String,
-    private val requestSpec: RequestSpecification
+    private val requestSpec: RequestSpecification,
 ) {
-
     fun getIsAlive(): Response {
         return given()
             .spec(requestSpec)
