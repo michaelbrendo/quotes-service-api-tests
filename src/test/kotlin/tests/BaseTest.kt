@@ -1,6 +1,10 @@
 package tests
 
 import client.QuotesClient
+import io.qameta.allure.restassured.AllureRestAssured
+import io.restassured.builder.RequestSpecBuilder
+import io.restassured.http.ContentType
+import io.restassured.specification.RequestSpecification
 import mock.QuotesMockServer
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
@@ -11,10 +15,17 @@ abstract class BaseTest {
     protected lateinit var quotesClient: QuotesClient
 
     companion object {
+        private lateinit var requestSpec: RequestSpecification
+
         @JvmStatic
         @BeforeAll
         fun setupMockServer() {
             QuotesMockServer.start()
+
+            requestSpec = RequestSpecBuilder()
+                .setContentType(ContentType.JSON)
+                .addFilter(AllureRestAssured())
+                .build()
         }
 
         @JvmStatic
@@ -27,6 +38,8 @@ abstract class BaseTest {
     @BeforeEach
     fun setupClient() {
         QuotesMockServer.reset()
-        quotesClient = QuotesClient(QuotesMockServer.getBaseUrl())
+
+//        RestAssured.baseURI = QuotesMockServer.getBaseUrl()
+        quotesClient = QuotesClient(QuotesMockServer.getBaseUrl(), requestSpec)
     }
 }

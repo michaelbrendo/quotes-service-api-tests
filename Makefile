@@ -19,6 +19,8 @@ report:
 clean:
 	./gradlew clean
 
+test-report: clean test report
+
 # Container Docker
 docker-test:
 	docker compose up --build --exit-code-from quotes-api-tests
