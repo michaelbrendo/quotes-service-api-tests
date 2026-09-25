@@ -7,6 +7,7 @@ help:
 	@echo "  make lint-fix    - Run Ktlint format to auto-fix code style issues"
 	@echo "  make report      - Generate and serve Allure Report in browser"
 	@echo "  make clean       - Clean build artifacts and previous test reports"
+	@echo "  make test-report - clean lint test report"
 	@echo "  make docker-test - Build and run tests inside Docker container"
 	@echo "  make docker-down - Stop containers and remove temporary volumes"
 
