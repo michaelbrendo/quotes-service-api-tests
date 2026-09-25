@@ -1,14 +1,17 @@
-.gradle
+# Gradle & Build artifacts
+.gradle/
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+# Allure Reports & Results
+allure-results/
+allure-report/
+allure-history/
+
+# IntelliJ IDEA (Ignores ALL files in .idea directory)
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -16,10 +19,10 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
-### Kotlin ###
-.kotlin
+# Kotlin
+.kotlin/
 
-### Eclipse ###
+# Eclipse
 .apt_generated
 .classpath
 .factorypath
@@ -31,15 +34,16 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
 
-### VS Code ###
+# VS Code
 .vscode/
 
-### Mac OS ###
+# Mac OS & OS Temp
 .DS_Store
+Thumbs.db
