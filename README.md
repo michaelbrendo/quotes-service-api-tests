@@ -23,6 +23,19 @@ A robust, portable, and production-grade automated testing framework for the **Q
 
 ---
 
+## Technical Decisions & Architecture Trade-offs
+
+### 1. Technology Stack Choice
+* **Expertise & Productivity:** Kotlin with REST Assured and JUnit 5 was chosen because it represents my primary tech stack in day-to-day engineering. Leveraging familiar tools allowed me to deliver a clean, production-grade test framework efficiently while focusing heavily on scenario coverage, quality gates, and pipeline architecture.
+* **OpenAPI Flexibility:** As allowed in the assignment instructions, the project was built from the ground up using an OpenAPI/Swagger.
+
+### 2. Test Architecture & Design Decisions
+* **Test Data Builder Pattern (`QuoteTestDataBuilder`):** Implemented to centralize request payload creation with sensible defaults. This keeps individual test methods concise and readable by overriding only the fields relevant to each test case.
+* **Decoupled Assertions for Negative Cases:** For validation errors (`400 Bad Request`), assertions extract response fields directly via REST Assured `jsonPath` instead of binding to rigid error DTOs. This avoids over-coupling test code with brittle error response structures.
+* **Deterministic Environment via WireMock:** The entire suite runs against a local WireMock server, guaranteeing fast, reliable, and reproducible test executions both locally and in CI/CD without external environment flakiness.
+* **Protocol & Domain Separation:** Business calculation rules (prices, discounts) are tested at the domain level, while protocol requirements (HTTP status codes, content-type handling) are validated separately to ensure clean test boundaries.
+---
+
 ## Business Rules & Requirements
 
 The testing strategy and acceptance criteria for the Quotes Management Service are documented under:
