@@ -34,4 +34,16 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+
+    systemProperty("allure.results.directory", "build/allure-results")
+}
+
+allure {
+    adapter {
+        frameworks {
+            junit5 {
+                adapterVersion.set("2.27.0")
+            }
+        }
+    }
 }

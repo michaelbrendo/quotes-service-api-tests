@@ -14,7 +14,8 @@ docker-test:
 	docker-compose up --build
 
 report:
-	./gradlew allureReport allureServe
+	./gradlew allureReport
+	python3 -m http.server 45879 --directory build/reports/allure-report/allureReport
 
 clean:
 	./gradlew clean
