@@ -25,7 +25,7 @@ A robust, portable, and production-grade automated testing framework for the **Q
 ## Business Rules & Requirements
 
 The testing strategy and acceptance criteria for the Quotes Management Service are documented under:
-* [`docs/Acceptance_Criteria.md`](./docs/Acceptance_Criteria.md) — Detailed mapping of API endpoints, business rules, and expected status codes.
+* [`docs/Acceptance_Criteria.md`](./docs/Acceptance_Criteria.md): Detailed mapping of API endpoints, business rules, and expected status codes.
 
 ---
 
@@ -89,7 +89,7 @@ The pipeline runs automatically on:
 ### Pipeline Workflow Steps
 
 1. **Checkout Code:** Retrieves the latest code from the repository.
-2. **Setup Environment:** Configures JDK 17 (or runs isolated via Docker).
+2. **Setup Environment:** Configures JDK 17.
 3. **Execute Suite:** Runs the automated test suite using `./gradlew test` / `make docker-test`.
 4. **Publish Report:** Generates and deploys the Allure site to the `gh-pages` branch.
 

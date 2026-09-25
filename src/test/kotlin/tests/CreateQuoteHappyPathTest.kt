@@ -23,7 +23,7 @@ class CreateQuoteHappyPathTest : BaseTest() {
     }
 
     @Test
-    @DisplayName("Successfully create a new quote with one item for a customer")
+    @DisplayName("AC1: Successfully create a new quote with one item for a customer")
     fun ac1_shouldCreateQuoteWithSingleItemWithoutDiscount() {
 
         QuotesMockServer.stubCreateQuoteAC1()
@@ -54,7 +54,7 @@ class CreateQuoteHappyPathTest : BaseTest() {
     }
 
     @Test
-    @DisplayName("Successfully create a new quote with one item with discount for a customer")
+    @DisplayName("AC2: Successfully create a new quote with one item with discount for a customer")
     fun ac2_shouldCreateQuoteWithSingleItemWithDiscount() {
 
         QuotesMockServer.stubCreateQuoteAC2()
