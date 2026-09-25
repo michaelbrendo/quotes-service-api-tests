@@ -1,17 +1,16 @@
-.PHONY: test docker-test report clean help
+.PHONY: help test report clean docker-test docker-down
 
 help:
 	@echo "Available commands:"
-	@echo "  make test        - Run automated tests locally via Gradle Wrapper"
-	@echo "  make docker-test - Run automated tests inside Docker container"
+	@echo "  make test        - Run tests locally via Gradle Wrapper"
 	@echo "  make report      - Generate and serve Allure Report in browser"
 	@echo "  make clean       - Clean build artifacts and previous test reports"
+	@echo "  make docker-test - Build and run tests inside Docker container"
+	@echo "  make docker-down - Stop containers and remove temporary volumes"
 
+# local
 test:
 	./gradlew test
-
-docker-test:
-	docker-compose up --build
 
 report:
 	./gradlew allureReport
@@ -19,3 +18,10 @@ report:
 
 clean:
 	./gradlew clean
+
+# Container Docker
+docker-test:
+	docker compose up --build --exit-code-from quotes-api-tests
+
+docker-down:
+	docker compose down -v

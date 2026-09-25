@@ -1,14 +1,11 @@
-version: '3.8'
-
 services:
-  api-tests:
+  quotes-api-tests:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: quotes-api-tests
     volumes:
-      # Mapeia os relatórios gerados dentro do contêiner para a máquina hostt
       - ./build/reports:/app/build/reports
-      - ./allure-results:/app/allure-results
+      - ./build/allure-results:/app/build/allure-results
     environment:
       - GRADLE_OPTS=-Dorg.gradle.daemon=false
