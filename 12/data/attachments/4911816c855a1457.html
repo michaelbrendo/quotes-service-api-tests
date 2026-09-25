@@ -1,0 +1,41 @@
+<div>POST to http://localhost:8089/api/Quotes/create</div>
+
+    <h4>Body</h4>
+    <div>
+    <pre class="preformated-text">
+{
+    &quot;customer&quot;: &quot;&quot;,
+    &quot;items&quot;: [
+        {
+            &quot;item&quot;: &quot;Product A&quot;,
+            &quot;quantity&quot;: 1.0,
+            &quot;unitaryPrice&quot;: 100.0,
+            &quot;discountPercentage&quot;: 0.0
+        }
+    ]
+}    </pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>Accept: */*</div>
+            <div>Content-Type: application/json</div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        curl -v -X POST &#39;http://localhost:8089/api/Quotes/create&#39; -H &#39;Accept: */*&#39; -H &#39;Content-Type: application/json&#39; -d &#39;{
+    &quot;customer&quot;: &quot;&quot;,
+    &quot;items&quot;: [
+        {
+            &quot;item&quot;: &quot;Product A&quot;,
+            &quot;quantity&quot;: 1.0,
+            &quot;unitaryPrice&quot;: 100.0,
+            &quot;discountPercentage&quot;: 0.0
+        }
+    ]
+}&#39;
+    </div>
+
