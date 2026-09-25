@@ -1,11 +1,9 @@
 package model
 
-import org.mozilla.javascript.tools.debugger.Dim
-import java.util.UUID
-import javax.sound.sampled.Line
+import java.util.*
 
 data class CreateQuoteResponse(
-    val quote: Quote,
+    val quote: Quote? = null,
     val confirmation: Confirmation
 )
 

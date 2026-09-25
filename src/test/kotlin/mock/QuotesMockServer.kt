@@ -189,4 +189,98 @@ object QuotesMockServer {
                 )
         )
     }
+
+    // ADDITIONAL ACCEPTANCE CRITERIA - HAPPY PATH
+    fun stubCreateQuoteMixedDiscounts() {
+        wireMockServer?.stubFor(
+            post(urlEqualTo("/api/Quotes/create"))
+                .withHeader("Content-Type", containing("application/json"))
+                .willReturn(
+                    aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody(
+                            """
+                            {
+                              "quote": {
+                                "id": "d6ea0543-2f45-4a14-10e6-5425461d7453",
+                                "customer": "Acme Corp",
+                                "revision": 1,
+                                "totalPrice": 680.0,
+                                "lines": [
+                                  {
+                                    "item": "Product A",
+                                    "quantity": 2.0,
+                                    "unitaryPrice": 100.0,
+                                    "discountPercentage": 10.0,
+                                    "discountAmount": 20.0,
+                                    "linePrice": 180.0
+                                  },
+                                  {
+                                    "item": "Product B",
+                                    "quantity": 1.0,
+                                    "unitaryPrice": 500.0,
+                                    "discountPercentage": 0.0,
+                                    "discountAmount": 0.0,
+                                    "linePrice": 500.0
+                                  }
+                                ],
+                                "status": "Active"
+                              },
+                              "confirmation": {
+                                "message": "Quote created successfully.",
+                                "level": "Success"
+                              }
+                            }
+                            """.trimIndent()
+                        )
+                )
+        )
+    }
+
+    // NEGATIVE CASES Error (HTTP 400 Bad Request)
+    fun stubCreateQuoteMissingCustomer() {
+        wireMockServer?.stubFor(
+            post(urlEqualTo("/api/Quotes/create"))
+                .withHeader("Content-Type", containing("application/json"))
+                .willReturn(
+                    aResponse()
+                        .withStatus(400)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody(
+                            """
+                            {
+                              "confirmation": {
+                                "message": "Customer name is required and cannot be empty.",
+                                "level": "Error"
+                              }
+                            }
+                            """.trimIndent()
+                        )
+                )
+        )
+    }
+
+    // NEGATIVE CASES Error (HTTP 400 Bad Request)
+    fun stubCreateQuoteEmptyItems() {
+        wireMockServer?.stubFor(
+            post(urlEqualTo("/api/Quotes/create"))
+                .withHeader("Content-Type", containing("application/json"))
+                .willReturn(
+                    aResponse()
+                        .withStatus(400)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody(
+                            """
+                            {
+                              "confirmation": {
+                                "message": "Quote must contain at least one item.",
+                                "level": "Error"
+                              }
+                            }
+                            """.trimIndent()
+                        )
+                )
+        )
+    }
 }

@@ -14,6 +14,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2") // Substituído de testEngine para testRuntimeOnly
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.2")
+    testImplementation("org.assertj:assertj-core:3.25.3")
+    testImplementation("org.slf4j:slf4j-simple:2.0.12")
 
     // REST Assured & JSON Schema Validation
     testImplementation("io.rest-assured:rest-assured:5.4.0")

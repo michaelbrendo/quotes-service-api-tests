@@ -4,6 +4,7 @@ import mock.QuotesMockServer
 import model.CreateQuoteRequest
 import model.CreateQuoteRequestItem
 import model.CreateQuoteResponse
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -44,7 +45,7 @@ class CreateQuoteHappyPathTest : BaseTest() {
         assertEquals(200, response.statusCode)
 
         val responseBody = response. `as` (CreateQuoteResponse::class.java)
-        assertNotNull(responseBody.quote.id)
+        assertNotNull(responseBody.quote!!.id)
         assertEquals("Acme Corp", responseBody.quote.customer)
         assertEquals(1, responseBody.quote.lines.size)
         assertEquals(100.0, responseBody.quote.lines[0].linePrice)
@@ -75,7 +76,7 @@ class CreateQuoteHappyPathTest : BaseTest() {
         assertEquals(200, response.statusCode)
 
         val responseBody = response. `as` (CreateQuoteResponse::class.java)
-        assertNotNull(responseBody.quote.id)
+        assertNotNull(responseBody.quote!!.id)
         assertEquals("Acme Corp", responseBody.quote.customer)
         assertEquals(10.0, responseBody.quote.lines[0].discountAmount)
         assertEquals(90.0, responseBody.quote.lines[0].linePrice)
@@ -113,13 +114,48 @@ class CreateQuoteHappyPathTest : BaseTest() {
         assertEquals(200, response.statusCode)
 
         val responseBody = response. `as` (CreateQuoteResponse::class.java)
-        assertNotNull(responseBody.quote.id)
+        assertNotNull(responseBody.quote!!.id)
         assertEquals("Acme Corp", responseBody.quote.customer)
         assertEquals(2, responseBody.quote.lines.size)
         assertEquals(200.0, responseBody.quote.totalPrice)
         assertEquals("Quote created successfully.", responseBody.confirmation.message)
+    }
 
+    @Test
+    @DisplayName("Happy Path: Create quote with multiple items and mixed discounts")
+    fun shouldCreateQuoteWithMultipleItemsAndMixedDiscounts() {
 
+        QuotesMockServer.stubCreateQuoteMixedDiscounts()
+
+        val requestPayload = CreateQuoteRequest(
+            customer = "Acme Corp",
+            items = listOf(
+                CreateQuoteRequestItem(
+                    item = "Product A",
+                    quantity = 2.0f,
+                    unitaryPrice = 100.0,
+                    discountPercentage = 10.0f
+                ),
+                CreateQuoteRequestItem(
+                    item = "Product B",
+                    quantity = 1.0f,
+                    unitaryPrice = 500.0,
+                    discountPercentage = 0.0f
+                )
+            )
+        )
+
+        val response = quotesClient.postCreateQuote(requestPayload)
+            .then()
+            .statusCode(200)
+            .extract()
+            .`as`(CreateQuoteResponse::class.java)
+
+        assertThat(response.confirmation.level.name).isEqualTo("Success")
+        assertThat(response.quote!!.lines).hasSize(2)
+        assertThat(response.quote.lines[0].linePrice).isEqualTo(180.0)
+        assertThat(response.quote.lines[1].linePrice).isEqualTo(500.0)
+        assertThat(response.quote.totalPrice).isEqualTo(680.0)
     }
 
 }
