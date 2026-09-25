@@ -52,6 +52,10 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
+      - name: Ensure allure-results directory exists
+        if: always()
+        run: mkdir -p build/allure-results
+
       - name: Generate Allure Report with History
         uses: simple-elf/allure-report-action@v1.13
         if: always()
